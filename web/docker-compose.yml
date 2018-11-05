@@ -1,0 +1,16 @@
+version: '3'
+services:
+  whoami:
+    image: containous/whoami
+    deploy:
+      labels:
+        - "traefik.port=80"
+        - "traefik.backend=web"
+        - "traefik.frontend.rule=Host:${WEB_DOMAIN}"
+        - "traefik.enable=true"
+    networks:
+    - traefik-net
+networks:
+  traefik-net:
+    external:
+      name: traefik-net

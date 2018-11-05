@@ -1,0 +1,20 @@
+version: '3'
+# https://docs.traefik.io/user-guide/swarm-mode/
+services:
+  reverse-proxy:
+    image: traefik
+    command: --api --docker --docker.swarmmode --docker.watch --logLevel=DEBUG
+
+    ports:
+    - "80:80"
+    - "8080:8080"
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    #- ./traefik.toml:/etc/traefik/traefik.toml
+    networks:
+    - traefik-net
+networks:
+  traefik-net:
+    external:
+      name: traefik-net
+
